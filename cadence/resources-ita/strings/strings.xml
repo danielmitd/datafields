@@ -1,0 +1,9 @@
+<strings>
+    <string id="title">Cadenza</string>
+    <string id="metric">giri/m</string>
+    <string id="themeTitle">Tema</string>
+    <string id="themeRed">Rosso-Nero-Verde</string>
+    <string id="themeRedInvert">Rosso-Nero-Verde Invertito</string>
+    <string id="themeNone">Predefinito</string>
+    <string id="threshold">%-Soglia (0-100)</string>
+</strings>

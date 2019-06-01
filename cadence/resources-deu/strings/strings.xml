@@ -1,0 +1,9 @@
+<strings>
+    <string id="title">Trittfrequenz</string>
+    <string id="metric">U/min</string>
+    <string id="themeTitle">Thema</string>
+    <string id="themeRed">Rot-Schwarz-Grün</string>
+    <string id="themeRedInvert">Rot-Schwarz-Grün Invertiert</string>
+    <string id="themeNone">Standard</string>
+    <string id="threshold">%-Schwellenwert (0-100)</string>
+</strings>

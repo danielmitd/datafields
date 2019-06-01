@@ -1,0 +1,9 @@
+<strings>
+    <string id="title">Kadencja</string>
+    <string id="metric">obroty</string>
+    <string id="themeTitle">Temat</string>
+    <string id="themeRed">Czerwono-czarno-zielony</string>
+    <string id="themeRedInvert">Czerwono-czarno-zielony Odwrócony</string>
+    <string id="themeNone">Domyślnie</string>
+    <string id="threshold">%-Próg (0-100)</string>
+</strings>

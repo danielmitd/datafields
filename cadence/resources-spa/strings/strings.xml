@@ -1,0 +1,9 @@
+<strings>
+    <string id="title">Cadencia</string>
+    <string id="metric">rpm</string>
+    <string id="themeTitle">Tema</string>
+    <string id="themeRed">Rojo-Negro-Verde</string>
+    <string id="themeRedInvert">Rojo-Negro-Verde Invertido</string>
+    <string id="themeNone">Predeterminado</string>
+    <string id="threshold">%-Umbral (0-100)</string>
+</strings>

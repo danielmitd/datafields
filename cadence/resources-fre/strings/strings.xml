@@ -1,0 +1,9 @@
+<strings>
+    <string id="title">Cadence</string>
+    <string id="metric">tr/min</string>
+    <string id="themeTitle">Thème</string>
+    <string id="themeRed">Rouge-Noir-Vert</string>
+    <string id="themeRedInvert">Rouge-Noir-Vert Inversé</string>
+    <string id="themeNone">Standard</string>
+    <string id="threshold">%-Seuil (0-100)</string>
+</strings>
