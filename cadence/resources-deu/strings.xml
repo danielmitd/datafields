@@ -6,4 +6,8 @@
     <string id="themeRedInvert">Rot-Schwarz-Grün Invertiert</string>
     <string id="themeNone">Standard</string>
     <string id="threshold">%-Schwellenwert (0-100)</string>
+    <string id="cadenceMode">Trittfrequenz Modus</string>
+    <string id="personalCadence">Persönliches Trittfrequenz Ziel*</string>
+    <string id="modeAverage">Durchschnitts-Trittfrequenz</string>
+    <string id="modePersonal">Persönliche Trittfrequenz*</string>
 </strings>

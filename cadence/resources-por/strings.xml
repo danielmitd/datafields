@@ -6,4 +6,8 @@
     <string id="themeRedInvert">Vermelho-preto-verde Invertido</string>
     <string id="themeNone">Padrão</string>
     <string id="threshold">%-Limiar (0-100)</string>
+    <string id="cadenceMode">Modo Cadência</string>
+    <string id="personalCadence">Meta de cadência pessoal*</string>
+    <string id="modeAverage">Cadência Média</string>
+    <string id="modePersonal">Cadência Pessoal*</string>
 </strings>

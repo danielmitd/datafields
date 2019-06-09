@@ -4,6 +4,8 @@
 
 Simple two valued data field with cadence and average cadence. Configurable using Garmin Express or Garmin Connect:
 
+- Mode: average or personal cadence
+- Personal cadence Goal (for personal cadence mode)
 - Threshold for coloring (default 5%)
 - Theming (none, red-green, red-green inverted)
 

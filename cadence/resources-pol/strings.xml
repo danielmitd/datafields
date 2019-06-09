@@ -6,4 +6,8 @@
     <string id="themeRedInvert">Czerwono-czarno-zielony Odwrócony</string>
     <string id="themeNone">Domyślnie</string>
     <string id="threshold">%-Próg (0-100)</string>
+    <string id="cadenceMode">Tryb kadencji</string>
+    <string id="personalCadence">Osobisty cel kadencyjny*</string>
+    <string id="modeAverage">Średnia kadencja</string>
+    <string id="modePersonal">Kadencja osobista*</string>
 </strings>

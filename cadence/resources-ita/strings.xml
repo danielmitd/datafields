@@ -6,4 +6,8 @@
     <string id="themeRedInvert">Rosso-Nero-Verde Invertito</string>
     <string id="themeNone">Predefinito</string>
     <string id="threshold">%-Soglia (0-100)</string>
+    <string id="cadenceMode">Modalità Cadenza</string>
+    <string id="personalCadence">Obiettivo personale di cadenza*</string>
+    <string id="modeAverage">Cadenza media</string>
+    <string id="modePersonal">Cadenza personale*</string>
 </strings>

@@ -1,8 +1,10 @@
 <resources>
 
     <properties>
+        <property id="cadenceMode" type="number">0</property>
         <property id="theme" type="number">1</property>
         <property id="threshold" type="number">5</property>
+        <property id="personalCadence" type="number">85</property>
     </properties>
 
     <settings>
@@ -13,9 +15,20 @@
                 <listEntry value="2">@Strings.themeRedInvert</listEntry>
             </settingConfig>
         </setting>
-        
+
+        <setting propertyKey="@Properties.cadenceMode" title="@Strings.cadenceMode">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.modeAverage</listEntry>
+                <listEntry value="1">@Strings.modePersonal</listEntry>
+            </settingConfig>
+        </setting>
+
         <setting propertyKey="@Properties.threshold" title="@Strings.threshold">
             <settingConfig type="numeric" min="0" max="100" />
+        </setting>
+
+        <setting propertyKey="@Properties.personalCadence" title="@Strings.personalCadence">
+            <settingConfig type="numeric" min="0" max="250" />
         </setting>
     </settings>
 </resources>

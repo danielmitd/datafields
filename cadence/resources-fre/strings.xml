@@ -6,4 +6,8 @@
     <string id="themeRedInvert">Rouge-Noir-Vert Inversé</string>
     <string id="themeNone">Standard</string>
     <string id="threshold">%-Seuil (0-100)</string>
+    <string id="cadenceMode">Mode Cadence</string>
+    <string id="personalCadence">Cadence personnelle Cible*</string>
+    <string id="modeAverage">Cadence moyenne</string>
+    <string id="modePersonal">Cadence personnelle*</string>
 </strings>

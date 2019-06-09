@@ -5,6 +5,7 @@ class cadenceView extends Toybox.WatchUi.DataField {
 
     protected var currentCadence;
     protected var averageCadence;
+    protected var personalCadence;
     protected var themedItems;
 
     enum {
@@ -14,6 +15,11 @@ class cadenceView extends Toybox.WatchUi.DataField {
         INDICATE_HIGH,
         INDICATE_LOW,
         INDICATE_NORMAL,
+    }
+
+    enum {
+        MODE_AVERAGE,
+        MODE_PERSONAL,
     }
 
     function initialize() {
@@ -77,9 +83,10 @@ class cadenceView extends Toybox.WatchUi.DataField {
             case THEME_RED:
                 for (var i = 0; i < itemCount; i++ ) {
                     // implicit: only make first item red/green
-                    if (i == 0 && indication == INDICATE_HIGH) {
+                    var indicate = items[i] == themedItems[:cadence];
+                    if (indicate && indication == INDICATE_HIGH) {
                         items[i].setColor(Graphics.COLOR_DK_GREEN);
-                    } else if (i == 0 && indication == INDICATE_LOW) {
+                    } else if (indicate && indication == INDICATE_LOW) {
                         items[i].setColor(Graphics.COLOR_DK_RED);
                     } else {
                         // others get default coloring
@@ -115,21 +122,37 @@ class cadenceView extends Toybox.WatchUi.DataField {
         return backgroundColor;
     }
 
-    // Display the value you computed here. This will be called
-    // once a second when the data field is visible.
+    function getComparableCadence() {
+        var mode = Application.Properties.getValue("cadenceMode");
+
+        if (mode == MODE_PERSONAL) {
+            return Application.Properties.getValue("personalCadence");
+        }
+
+        return averageCadence;
+    }
+
+    function getVariations() {
+        var threshold = Application.Properties.getValue("threshold").toFloat();
+        var compareable = getComparableCadence();
+        var control = compareable * (threshold/100);
+
+        return {
+            :min => compareable - control,
+            :max => compareable + control
+        };
+    }
+
     function onUpdate(dc) {
         var backgroundColor = getBackgroundColor();
         var background = View.findDrawableById("Background");
 
         if (currentCadence != null) {
-            var threshold = Application.Properties.getValue("threshold").toFloat();
-            var control = averageCadence * (threshold/100);
-            var min = averageCadence - control;
-            var max = averageCadence + control;
+            var variations = getVariations();
 
-            if (currentCadence > max) {
+            if (currentCadence > variations[:max]) {
                 backgroundColor = setThemedColors(themedItems, INDICATE_HIGH);
-            } else if (currentCadence < min) {
+            } else if (currentCadence < variations[:min]) {
                 backgroundColor = setThemedColors(themedItems, INDICATE_LOW);
             } else {
                 backgroundColor = setThemedColors(themedItems, INDICATE_NORMAL);
@@ -143,7 +166,7 @@ class cadenceView extends Toybox.WatchUi.DataField {
         }
 
         background.setColor(backgroundColor);
-        themedItems[:average].setText(averageCadence.format("%d"));
+        themedItems[:average].setText(getComparableCadence().format("%d"));
 
         View.onUpdate(dc);
     }
