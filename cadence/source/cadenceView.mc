@@ -3,16 +3,14 @@ using Toybox.Application;
 
 class cadenceView extends Toybox.WatchUi.DataField {
 
-    hidden var currentCadence;
-    hidden var averageCadence;
+    protected var currentCadence;
+    protected var averageCadence;
+    protected var themedItems;
 
     enum {
         THEME_NONE,
         THEME_RED,
-        THEME_RED_INVERT
-    }
-
-    enum {
+        THEME_RED_INVERT,
         INDICATE_HIGH,
         INDICATE_LOW,
         INDICATE_NORMAL,
@@ -26,23 +24,26 @@ class cadenceView extends Toybox.WatchUi.DataField {
 
     function onLayout(dc) {
         View.setLayout(Rez.Layouts.MainLayout(dc));
-        var labelView = View.findDrawableById("title");
-        labelView.locY = labelView.locY - 14;
+        themedItems = {
+            :cadence => View.findDrawableById("cadence"),
+            :average => View.findDrawableById("average"),
+            :metric  => View.findDrawableById("metric"),
+            :title   => View.findDrawableById("title")
+        };
 
-        var valueView = View.findDrawableById("cadence");
-        valueView.locX = valueView.locX + 16;
-        valueView.locY = valueView.locY + 11;
+        themedItems[:title].locY -= 14;
 
-        var averageView = View.findDrawableById("average");
-        averageView.locX = averageView.locX + 20;
-        averageView.locY = averageView.locY + 5;
+        themedItems[:cadence].locX += 16;
+        themedItems[:cadence].locY += 15;
 
-        var averageLabel = View.findDrawableById("metric");
-        averageLabel.locX = averageLabel.locX + 20;
-        averageLabel.locY = averageLabel.locY + 17;
+        themedItems[:average].locX += 20;
+        themedItems[:average].locY += 7;
 
-        View.findDrawableById("title").setText(Rez.Strings.title);
-        View.findDrawableById("metric").setText(Rez.Strings.metric);
+        themedItems[:metric].locX += 20;
+        themedItems[:metric].locY += 18;
+
+        themedItems[:title].setText(Rez.Strings.title);
+        themedItems[:metric].setText(Rez.Strings.metric);
         return true;
     }
 
@@ -120,14 +121,6 @@ class cadenceView extends Toybox.WatchUi.DataField {
         var backgroundColor = getBackgroundColor();
         var background = View.findDrawableById("Background");
 
-        // all those items will be "themed"
-        var themedItems = {
-            "cadence" => View.findDrawableById("cadence"),
-            "average" => View.findDrawableById("average"),
-            "metric"  => View.findDrawableById("metric"),
-            "title"   => View.findDrawableById("title")
-        };
-
         if (currentCadence != null) {
             var threshold = Application.Properties.getValue("threshold").toFloat();
             var control = averageCadence * (threshold/100);
@@ -142,15 +135,15 @@ class cadenceView extends Toybox.WatchUi.DataField {
                 backgroundColor = setThemedColors(themedItems, INDICATE_NORMAL);
             }
 
-            themedItems["cadence"].setText(currentCadence.format("%d"));
+            themedItems[:cadence].setText(currentCadence.format("%d"));
         } else {
             // not initialized yet
             setThemedColors(themedItems, INDICATE_NORMAL);
-            themedItems["cadence"].setText("__");
+            themedItems[:cadence].setText("0");
         }
 
         background.setColor(backgroundColor);
-        themedItems["average"].setText(averageCadence.format("%d"));
+        themedItems[:average].setText(averageCadence.format("%d"));
 
         View.onUpdate(dc);
     }
