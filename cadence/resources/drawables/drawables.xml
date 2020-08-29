@@ -1,3 +1,42 @@
-<drawables>
-    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
-</drawables>
+<resources>
+    <drawables>
+        <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    </drawables>
+
+    <drawable-list id="dbg">
+        <shape type="rectangle" x="0" y="49%" width="90" height="fill"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_DK_RED"
+            border_width="1"
+            />
+        <shape type="rectangle" x="90" y="49%" width="100" height="fill"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_DK_RED"
+            border_width="1"
+            />
+
+        <shape type="rectangle" x="center" y="7" width="100" height="23"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_YELLOW"
+            border_width="1"
+            />
+
+        <shape type="rectangle" x="94" y="65%" width="40" height="15"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_BLUE"
+            border_width="1"
+            />
+
+        <shape type="rectangle" x="194" y="50%" width="40" height="15"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_BLUE"
+            border_width="1"
+            />
+
+        <shape type="rectangle" x="194" y="65%" width="40" height="15"
+            color="Gfx.COLOR_TRANSPARENT"
+            border_color="Gfx.COLOR_BLUE"
+            border_width="1"
+            />
+    </drawable-list>
+</resources>

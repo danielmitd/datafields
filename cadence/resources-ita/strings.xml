@@ -1,6 +1,8 @@
 <strings>
     <string id="title">Cadenza</string>
     <string id="metric">giri/m</string>
+    <string id="labelAvg">avg</string>
+    <string id="labelPersonal">per.</string>
     <string id="themeTitle">Tema</string>
     <string id="themeRed">Rosso-Nero-Verde</string>
     <string id="themeRedInvert">Rosso-Nero-Verde Invertito</string>

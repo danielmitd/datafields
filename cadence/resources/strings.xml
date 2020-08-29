@@ -1,6 +1,8 @@
 <strings>
     <string id="title">Cadence</string>
     <string id="metric">rpm</string>
+    <string id="labelAvg">avg</string>
+    <string id="labelPersonal">per.</string>
     <string id="themeTitle">Theme</string>
     <string id="themeRed">Red-Black-Green</string>
     <string id="themeRedInvert">Red-Black-Green Inverted</string>

@@ -29,27 +29,38 @@ class cadenceView extends Toybox.WatchUi.DataField {
     }
 
     function onLayout(dc) {
-        View.setLayout(Rez.Layouts.MainLayout(dc));
+        var fullWidth = dc.getWidth() > 122;
+
+        if (fullWidth) {
+            View.setLayout(Rez.Layouts.FullWidthLayout(dc));
+        } else {
+            View.setLayout(Rez.Layouts.HalfWidthLayout(dc));
+        }
+
         themedItems = {
             :cadence => View.findDrawableById("cadence"),
             :average => View.findDrawableById("average"),
             :metric  => View.findDrawableById("metric"),
+            :metric2  => View.findDrawableById("metric2"),
+            :label  => View.findDrawableById("label"),
             :title   => View.findDrawableById("title")
         };
 
-        themedItems[:title].locY -= 14;
-
-        themedItems[:cadence].locX += 16;
-        themedItems[:cadence].locY += 15;
-
-        themedItems[:average].locX += 20;
-        themedItems[:average].locY += 7;
-
-        themedItems[:metric].locX += 20;
-        themedItems[:metric].locY += 18;
-
         themedItems[:title].setText(Rez.Strings.title);
         themedItems[:metric].setText(Rez.Strings.metric);
+
+        // only available on full width
+        if (fullWidth) {
+            var mode = Application.Properties.getValue("cadenceMode");
+            themedItems[:label].setText(mode == MODE_AVERAGE ? Rez.Strings.labelAvg : Rez.Strings.labelPersonal);
+            themedItems[:metric2].setText(Rez.Strings.metric);
+
+            // adjust the label and metrics in height
+            var fontSize = Graphics.getFontHeight(Graphics.Graphics.FONT_NUMBER_MILD);
+            themedItems[:metric].locY = themedItems[:cadence].locY + (fontSize/2) - 2;
+            themedItems[:metric2].locY = themedItems[:metric].locY;
+
+        }
         return true;
     }
 
@@ -70,27 +81,35 @@ class cadenceView extends Toybox.WatchUi.DataField {
     /**
      * render colors for items based on theme and indication.
      *
-     * @return new background color
+     * @return themed colors
      */
-    function setThemedColors(itemsDict, indication) {
+    function themed(itemsDict, indication) {
         var theme = Application.Properties.getValue("theme");
         var backgroundColor = getBackgroundColor();
         var defaultColor = backgroundColor == Graphics.COLOR_BLACK ? Graphics.COLOR_WHITE : Graphics.COLOR_BLACK;
         var items = itemsDict.values();
         var itemCount = itemsDict.size();
+        var color = defaultColor;
 
         switch (theme) {
             case THEME_RED:
                 for (var i = 0; i < itemCount; i++ ) {
                     // implicit: only make first item red/green
-                    var indicate = items[i] == themedItems[:cadence];
+                    var item = items[i];
+                    if (null == item) {
+                        continue;
+                    }
+
+                    var indicate = item == themedItems[:cadence];
                     if (indicate && indication == INDICATE_HIGH) {
-                        items[i].setColor(Graphics.COLOR_DK_GREEN);
+                        color = Graphics.COLOR_DK_GREEN;
+                        item.setColor(Graphics.COLOR_DK_GREEN);
                     } else if (indicate && indication == INDICATE_LOW) {
-                        items[i].setColor(Graphics.COLOR_DK_RED);
+                        color = Graphics.COLOR_DK_RED;
+                        item.setColor(Graphics.COLOR_DK_RED);
                     } else {
                         // others get default coloring
-                        items[i].setColor(defaultColor);
+                        item.setColor(defaultColor);
                     }
                 }
                 break;
@@ -98,14 +117,21 @@ class cadenceView extends Toybox.WatchUi.DataField {
             case THEME_RED_INVERT:
                 for (var j = 0; j < itemCount; j++ ) {
                     // explicit: make all items red/green/default
+                    var item = items[j];
+                    if (null == item) {
+                        continue;
+                    }
+
                     if (indication == INDICATE_HIGH) {
-                        items[j].setColor(Graphics.COLOR_WHITE);
+                        color = Graphics.COLOR_WHITE;
+                        item.setColor(Graphics.COLOR_WHITE);
                         backgroundColor = Graphics.COLOR_DK_GREEN;
                     } else if (indication == INDICATE_LOW) {
-                        items[j].setColor(Graphics.COLOR_WHITE);
+                        color = Graphics.COLOR_WHITE;
+                        item.setColor(Graphics.COLOR_WHITE);
                         backgroundColor = Graphics.COLOR_DK_RED;
                     } else {
-                        items[j].setColor(defaultColor);
+                        item.setColor(defaultColor);
                     }
                 }
                 break;
@@ -114,12 +140,18 @@ class cadenceView extends Toybox.WatchUi.DataField {
             case THEME_NONE:
                 // all get default coloring
                 for (var k = 0; k < itemCount; k++ ) {
-                    items[k].setColor(defaultColor);
+                    if (null != items[k]) {
+                        items[k].setColor(defaultColor);
+                    }
                 }
                 break;
         }
 
-        return backgroundColor;
+        return {
+            :background => backgroundColor,
+            :color => color,
+            :indication => indication
+        };
     }
 
     function getComparableCadence() {
@@ -143,32 +175,54 @@ class cadenceView extends Toybox.WatchUi.DataField {
         };
     }
 
+    function drawArrows(dc, colors) {
+        var center = dc.getWidth() / 2;
+        var vcenter = (dc.getHeight() / 2) + 4;
+
+        // up arrow, 13x7
+        dc.setColor(colors[:indication] == INDICATE_HIGH ? colors[:color] : Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.fillPolygon([[center - 6, vcenter + 6], [center, vcenter], [center + 6, vcenter + 6]]);
+
+        // down arrow, 13x7
+        dc.setColor(colors[:indication] == INDICATE_LOW ? colors[:color] : Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
+        dc.fillPolygon([[center - 6, vcenter + 10], [center, vcenter + 16], [center + 6, vcenter + 10]]);
+    }
+
     function onUpdate(dc) {
-        var backgroundColor = getBackgroundColor();
+        var colors = {
+            :background => getBackgroundColor(),
+            :color => null
+        };
         var background = View.findDrawableById("Background");
+        var fullWidth = dc.getWidth() > 122;
 
         if (currentCadence != null) {
             var variations = getVariations();
 
             if (currentCadence > variations[:max]) {
-                backgroundColor = setThemedColors(themedItems, INDICATE_HIGH);
+                colors = themed(themedItems, INDICATE_HIGH);
             } else if (currentCadence < variations[:min]) {
-                backgroundColor = setThemedColors(themedItems, INDICATE_LOW);
+                colors = themed(themedItems, INDICATE_LOW);
             } else {
-                backgroundColor = setThemedColors(themedItems, INDICATE_NORMAL);
+                colors = themed(themedItems, INDICATE_NORMAL);
             }
 
             themedItems[:cadence].setText(currentCadence.format("%d"));
         } else {
             // not initialized yet
-            setThemedColors(themedItems, INDICATE_NORMAL);
+            colors = themed(themedItems, INDICATE_NORMAL);
             themedItems[:cadence].setText("0");
         }
 
-        background.setColor(backgroundColor);
+        background.setColor(colors[:background]);
         themedItems[:average].setText(getComparableCadence().format("%d"));
-
         View.onUpdate(dc);
+
+        if (!fullWidth) {
+            return;
+        }
+
+        drawArrows(dc, colors);
     }
 
 }

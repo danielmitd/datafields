@@ -1,26 +1,98 @@
 <layouts>
-    <!-- A generic, centered layout. -->
-    <layout id="MainLayout">
+    <!-- The "MainLayout", half width datafield. -->
+    <layout id="HalfWidthLayout">
         <drawable class="Background" />
-        
-        <label id="title" x="center" y="center" 
-        	color="Graphics.COLOR_BLACK" 
-        	justification="Graphics.TEXT_JUSTIFY_CENTER" 
-        	font="Graphics.FONT_TINY" />
-        	
-        <label id="cadence" x="center" y="center" 
-        	color="Graphics.COLOR_BLACK" 
-        	justification="Graphics.TEXT_JUSTIFY_RIGHT" 
-        	font="Graphics.FONT_NUMBER_MILD" />
-        	
-        <label id="metric" x="center" y="center" 
-        	color="Graphics.COLOR_BLACK" 
-        	justification="Graphics.TEXT_JUSTIFY_LEFT"
-        	font="Graphics.FONT_XTINY" />
-        	
-        <label id="average" x="center" y="center" 
-        	color="Graphics.COLOR_BLACK" 
-        	justification="Graphics.TEXT_JUSTIFY_LEFT" 
-        	font="Graphics.FONT_SMALL" />
+
+        <label id="title" x="center" y="7"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_CENTER"
+            font="Graphics.FONT_TINY" />
+
+        <label id="metric" x="74" y="67%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_LEFT"
+            font="Graphics.FONT_XTINY" />
+
+        <text-area id="cadence"
+            x="0" y="25%" width="70" height="90%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_RIGHT|Graphics.TEXT_JUSTIFY_VCENTER">
+            <fonts>
+                <font>Graphics.FONT_NUMBER_MILD</font>
+                <font>Graphics.FONT_LARGE</font>
+                <font>Graphics.FONT_MEDIUM</font>
+                <font>Graphics.FONT_SMALL</font>
+                <font>Graphics.FONT_TINY</font>
+                <font>Graphics.FONT_XTINY</font>
+            </fonts>
+        </text-area>
+
+        <text-area id="average"
+            x="74" y="25" width="45" height="90%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_LEFT">
+            <fonts>
+                <font>Graphics.FONT_SMALL</font>
+                <font>Graphics.FONT_TINY</font>
+                <font>Graphics.FONT_XTINY</font>
+            </fonts>
+        </text-area>
+    </layout>
+
+    <!-- The full width datafield. -->
+    <layout id="FullWidthLayout">
+        <drawable class="Background" />
+
+        <label id="title" x="center" y="7"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_CENTER"
+            font="Graphics.FONT_TINY" />
+
+        <label id="metric" x="94" y="65%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_LEFT"
+            font="Graphics.FONT_XTINY" />
+
+        <label id="label" x="194" y="50%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_LEFT"
+            font="Graphics.FONT_XTINY" />
+
+        <label id="metric2" x="194" y="65%"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_LEFT"
+            font="Graphics.FONT_XTINY" />
+
+        <text-area id="cadence"
+            x="0" y="49%" width="90" height="fill"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_RIGHT">
+            <fonts>
+                <font>Graphics.FONT_NUMBER_MILD</font>
+                <font>Graphics.FONT_LARGE</font>
+                <font>Graphics.FONT_MEDIUM</font>
+                <font>Graphics.FONT_SMALL</font>
+                <font>Graphics.FONT_TINY</font>
+                <font>Graphics.FONT_XTINY</font>
+            </fonts>
+        </text-area>
+
+        <text-area id="average"
+            x="90" y="49%" width="100" height="fill"
+            color="Graphics.COLOR_BLACK"
+            justification="Graphics.TEXT_JUSTIFY_RIGHT">
+            <fonts>
+                <font>Graphics.FONT_NUMBER_MILD</font>
+                <font>Graphics.FONT_LARGE</font>
+                <font>Graphics.FONT_MEDIUM</font>
+                <font>Graphics.FONT_SMALL</font>
+                <font>Graphics.FONT_TINY</font>
+                <font>Graphics.FONT_XTINY</font>
+            </fonts>
+        </text-area>
+
+        <!-- debug
+        <drawable id="dbg" />
+        -->
     </layout>
 </layouts>
